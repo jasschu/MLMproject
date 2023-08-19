@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  Home
+{% endblock %}
+
+{% block main %}
+
+<div>
+<p>This site shows breakdowns of income disclosures from MLM companies, the incomes shown on this site are the median and average annual incomes in USD for a particular company. 
+
+  Income data has been collected from the income disclosure statements that the MLM companies are required to make available.
+
+  Please note that most of these income disclosure statements to do not factor in the expenses that distributors pay in order to stay in the business (i.e sign up fees and buying product)
+</p>
+</div>
+<div>
+<p>Search for an MLM </p>
+<form action="search" method="post">
+  <input id="name" name="name" type="text">
+  <button class="btn btn-primary" type="submit">Search</button>
+</form>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Results
+{% endblock %}
+
+{% block main %}
+
+{% for mlm in mlms %}
+<a href="mlm/{{ mlm.name }}">{{ mlm.name }}</a>
+<br>
+{% endfor %}
+
+{% endblock %}

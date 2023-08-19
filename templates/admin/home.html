@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Admin Home
+{% endblock %}
+
+{% block main %}
+<p>Upload Spreadsheet with MLM income data</p>
+<form action="upload" enctype="multipart/form-data" method="post">
+  <label for="name">MLM Name</label>
+  <input id="name" type="text" name="name">
+  <label for="file">Spreadsheet</label>
+  <input id="file" type="file" accept=".csv" name="file"/>
+  <label for="link">Income Disclosure Link</label>
+  <input id="link" type="text" name="link">
+  <label for="year">Year of Statement</label>
+  <select name="year">
+    <option value="2022">2022</option>
+    <option value="2021">2021</option>
+    <option value="2020">2020</option>
+    <option value="2019">2019</option>
+  </select>
+
+
+  <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+
+<p>{{ message }}</p>
+
+{% endblock %}

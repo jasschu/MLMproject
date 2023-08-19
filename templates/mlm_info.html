@@ -1,0 +1,133 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{{ mlm.name }}
+{% endblock %}
+
+{% block main %}
+
+
+<br>
+<canvas id="barChart1" width="2000" height="1000"></canvas>
+<br>
+<canvas id="barChart2" width="2000" height="1000"></canvas>
+<br>
+<canvas id="polarAreaChart" width="2000" height="1000"></canvas>
+<br>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+  const medians_data = [
+    {% for val in medians %}
+  {% if val is none %}
+  null,
+    {% else %}
+  {{ val | safe }},
+  {% endif %}
+  {% endfor %}
+]
+
+  const average_data = [
+    {% for val in averages %}
+  {% if val is none %}
+  null,
+    {% else %}
+  {{ val | safe }},
+  {% endif %}
+  {% endfor %}
+]
+
+
+  if (!(medians_data.includes(null))) {
+    var ctx = document.getElementById('barChart1').getContext("2d");
+    var barChart1 = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: {{ levels | safe }},
+  datasets: [
+    {
+      label: "Median Income (USD) at level",
+      data: medians_data,
+      borderColor: "rgb(75, 192, 192)"
+    }
+  ]
+    },
+  options: {
+    plugins: {
+    title: {
+            display: true,
+            text: 'Median Income at each level of the Company'
+    }
+  },
+    indexAxis: 'y'
+  }
+  });
+  }else{
+    document.getElementById('barChart1').style.display="none";
+  }
+
+  if (!(average_data.includes(null))) {
+    var ctx = document.getElementById('barChart2').getContext("2d");
+    var barChart2 = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: {{ levels | safe }},
+    datasets: [
+      {
+        label: "Average Income (USD) at level",
+        data: average_data,
+      borderColor: "rgb(75, 192, 192)"
+          }
+    ]
+      },
+    options: {
+      plugins: {
+      title: {
+            display: true,
+              text: 'Average Income at each level of the Company'
+      }
+    },
+      indexAxis: 'y'
+
+      }
+    });
+} else{
+  document.getElementById('barChart2').style.display="none";
+}
+
+
+
+  var ctx = document.getElementById('polarAreaChart').getContext("2d");
+  var polarAreaChart = new Chart(ctx, {
+    type: 'polarArea',
+    data: {
+      labels: {{ levels | safe }},
+  datasets: [
+    {
+      label: "Percentage of company",
+      data: {{ percentages | safe }}
+        }
+  ]
+    },
+  options: {
+    plugins: {
+      title: {
+        display: true,
+          text: 'Percentage of Company at Each Level'
+      }
+    }
+  }});
+
+
+
+</script>
+
+<p>
+  Source: <a href="{{ statement.link }}">{{ statement. year }} Income Disclosure</a>
+</p>
+
+
+{% endblock %}
